@@ -1,0 +1,12 @@
+.board {
+  height: 10rem;
+  width: 18rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  background-color: rgb(146, 158, 60);
+  color: white;
+}
+.board p {
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+}

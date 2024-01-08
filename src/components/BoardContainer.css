@@ -1,0 +1,6 @@
+.board-container{
+    display: flex;
+    margin: 5%;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
