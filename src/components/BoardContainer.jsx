@@ -28,14 +28,18 @@ const BoardContainer = () => {
       });
   };
 
-  console.log(data);
   return data.length == 0 ? (
     <h1>Loading...</h1>
   ) : (
     <div className="board-container">
       <Form makeNewBoard={makeNewBoard} />
       {data.map((board, i) => (
-        <Board name={board.name} bgClr={board.prefs.backgroundColor} key={i} />
+        <Board
+          id={board.id}
+          name={board.name}
+          bgClr={board.prefs.backgroundColor}
+          key={i}
+        />
       ))}
     </div>
   );

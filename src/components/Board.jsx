@@ -1,11 +1,14 @@
-import './Board.css';
+import { Link } from "react-router-dom";
+import "./Board.css";
 // eslint-disable-next-line react/prop-types
-const Board = ({name , bgClr}) => {
+const Board = ({ id, name, bgClr }) => {
   return (
-   <div className="board" style={ {backgroundColor: bgClr}}>
-    <p>{name}</p>
-   </div>
-  )
-}
+    <Link to={`/${id}`} style={{ textDecoration: 'none'}}>
+      <div className="board" style={{ backgroundColor: bgClr }}>
+        <p>{name}</p>
+      </div>
+    </Link>
+  );
+};
 
-export default Board
+export default Board;
