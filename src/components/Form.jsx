@@ -64,6 +64,7 @@ export default function Form({makeNewBoard}) {
           <Button
             variant="contained"
             size="large"
+            disabled = {input ? false : true}
             style={{ marginTop: "1.5rem" }}
             onClick={() => {
               handleClose(),
