@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CloseIcon from "@mui/icons-material/Close";
+import Cards from "./Cards";
 
 const yourKey = "e329af9483b37135d074e667f5f48020";
 const yourToken =
@@ -54,15 +55,6 @@ const Lists = () => {
 
   return (
     <>
-      <h1
-        style={{
-          backgroundColor: "lightblue",
-          paddingLeft: "2rem",
-          paddingTop: "1rem",
-        }}
-      >
-        Hello
-      </h1>
       <div
         style={{
           overflow: "hidden",
@@ -74,7 +66,11 @@ const Lists = () => {
           direction={"row"}
           overflow={"scroll"}
           height={"100%"}
-          sx={{ gap: "0.5rem", margin: "2rem", marginRight: "0" }}
+          sx={{
+            gap: "0.5rem",
+            margin: "2rem",
+            marginRight: "0",
+          }}
         >
           {listData.map(({ id, name }) => (
             <List key={id}>
@@ -99,16 +95,7 @@ const Lists = () => {
                     <MoreHorizIcon />
                   </Button>
                 </div>
-                <Button
-                  variant="text"
-                  sx={{
-                    color: "cyan",
-                    width: "100%",
-                    backgroundColor: "coral",
-                  }}
-                >
-                  Add New Card
-                </Button>
+                <Cards id={id} />
               </ListItem>
             </List>
           ))}
