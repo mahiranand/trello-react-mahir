@@ -59,7 +59,6 @@ const Lists = () => {
         `https://api.trello.com/1/lists/${listId}?closed=true&key=${yourKey}&token=${yourToken}`
       )
       .then((res) => {
-        console.log(listId);
         setListData(listData.filter((list) => list.id !== res.data.id));
       });
   };
@@ -85,7 +84,6 @@ const Lists = () => {
         >
           {listData.map(({ id, name }) => (
             <List key={id}>
-              {console.log(id)}
               <ListItem
                 sx={{
                   width: "19rem",
@@ -102,7 +100,9 @@ const Lists = () => {
                     alignItems: "center",
                   }}
                 >
-                  <ListItemText>{name}</ListItemText>
+                  <ListItemText sx={{ paddingLeft: "0.5rem" }}>
+                    {name}
+                  </ListItemText>
                   <Button
                     sx={{ color: "black" }}
                     onClick={() => {

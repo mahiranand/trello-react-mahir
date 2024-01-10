@@ -2,6 +2,8 @@ import { Box, Button, Chip, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 const yourKey = "e329af9483b37135d074e667f5f48020";
 const yourToken =
   "ATTA7b429b51abd4c5a77e17cc2148635edce084bc45b889d6a7c21bbadaea2709fc28232EFF";
@@ -25,6 +27,16 @@ const Cards = ({ id }) => {
 
   const handleAddButton = () => {
     setShowButton((prevVal) => !prevVal);
+  };
+
+  const handleDelete = (cardId) => {
+    axios
+      .delete(
+        `https://api.trello.com/1/cards/${cardId}?key=${yourKey}&token=${yourToken}`
+      )
+      .then(() => {
+        setCardData(cardsData.filter(({ id }) => id != cardId));
+      });
   };
 
   const addNewCard = () => {
@@ -63,7 +75,13 @@ const Cards = ({ id }) => {
                 margin: "0.4rem 0",
                 cursor: "pointer",
                 fontSize: "1.1rem",
+                display: "flex",
+                justifyContent: "space-between",
               }}
+              onDelete={() => {
+                handleDelete(id);
+              }}
+              deleteIcon={<DeleteIcon />}
             />
           );
         })}
