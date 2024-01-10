@@ -9,9 +9,9 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CloseIcon from "@mui/icons-material/Close";
 import Cards from "./Cards";
+import ArchiveIcon from "@mui/icons-material/Archive";
 
 const yourKey = "e329af9483b37135d074e667f5f48020";
 const yourToken =
@@ -53,6 +53,17 @@ const Lists = () => {
     setInputValue("");
   };
 
+  const archiveList = (listId) => {
+    axios
+      .put(
+        `https://api.trello.com/1/lists/${listId}?closed=true&key=${yourKey}&token=${yourToken}`
+      )
+      .then((res) => {
+        console.log(listId);
+        setListData(listData.filter((list) => list.id !== res.data.id));
+      });
+  };
+
   return (
     <>
       <div
@@ -65,7 +76,7 @@ const Lists = () => {
         <Stack
           direction={"row"}
           overflow={"scroll"}
-          height={'100%'}
+          height={"100%"}
           sx={{
             gap: "0.5rem",
             margin: "2rem",
@@ -73,7 +84,8 @@ const Lists = () => {
           }}
         >
           {listData.map(({ id, name }) => (
-            <List key={id} >
+            <List key={id}>
+              {console.log(id)}
               <ListItem
                 sx={{
                   width: "19rem",
@@ -91,8 +103,13 @@ const Lists = () => {
                   }}
                 >
                   <ListItemText>{name}</ListItemText>
-                  <Button sx={{ color: "black" }}>
-                    <MoreHorizIcon />
+                  <Button
+                    sx={{ color: "black" }}
+                    onClick={() => {
+                      archiveList(id);
+                    }}
+                  >
+                    <ArchiveIcon />
                   </Button>
                 </div>
                 <Cards id={id} />
