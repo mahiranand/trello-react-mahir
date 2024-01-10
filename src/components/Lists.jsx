@@ -65,7 +65,7 @@ const Lists = () => {
         <Stack
           direction={"row"}
           overflow={"scroll"}
-          height={"100%"}
+          height={'100%'}
           sx={{
             gap: "0.5rem",
             margin: "2rem",
@@ -73,7 +73,7 @@ const Lists = () => {
           }}
         >
           {listData.map(({ id, name }) => (
-            <List key={id}>
+            <List key={id} >
               <ListItem
                 sx={{
                   width: "19rem",
