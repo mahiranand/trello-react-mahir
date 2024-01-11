@@ -16,7 +16,7 @@ const yourToken =
 
 // eslint-disable-next-line react/prop-types
 const CheckItems = ({ id }) => {
-  const [checkItems, setCheckitems] = useState([]);
+  const [checkItemsData, setCheckitemsData] = useState([]);
   const [showInputBox, setShowInputBox] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
@@ -26,7 +26,7 @@ const CheckItems = ({ id }) => {
         `https://api.trello.com/1/checklists/${id}/checkItems?key=${yourKey}&token=${yourToken}`
       )
       .then((res) => {
-        setCheckitems(res.data);
+        setCheckitemsData(res.data);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -37,7 +37,7 @@ const CheckItems = ({ id }) => {
         `https://api.trello.com/1/checklists/${id}/checkItems?name=${inputValue}&key=${yourKey}&token=${yourToken}`
       )
       .then((res) => {
-        setCheckitems([...checkItems, res.data]);
+        setCheckitemsData([...checkItemsData, res.data]);
       });
   };
 
@@ -47,14 +47,14 @@ const CheckItems = ({ id }) => {
         `https://api.trello.com/1/checklists/${id}/checkItems/${itemId}?key=${yourKey}&token=${yourToken}`
       )
       .then(() => {
-        setCheckitems(checkItems.filter(({ id }) => id !== itemId));
+        setCheckitemsData(checkItemsData.filter(({ id }) => id !== itemId));
       });
   };
 
   return (
     <div>
       <FormGroup sx={{ marginTop: "0.5rem" }}>
-        {checkItems.map(({ name, id, state }) => {
+        {checkItemsData.map(({ name, id, state }) => {
           return (
             <div
               key={id}
