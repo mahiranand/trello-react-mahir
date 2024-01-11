@@ -62,6 +62,7 @@ const CheckItems = ({ id }) => {
                 display: "flex",
                 alignItems: "center",
                 width: "30%",
+                minWidth: '12rem',
                 justifyContent: "space-between",
               }}
             >
