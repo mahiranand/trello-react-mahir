@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CheckItems from "./checkItems";
 
 const yourKey = "e329af9483b37135d074e667f5f48020";
 const yourToken =
@@ -159,37 +160,41 @@ const CheckList = ({ cardId, name, open, handleClose }) => {
             marginTop: "1.5rem",
             display: "flex",
             flexDirection: "column",
-            gap: "0.7rem",
+            gap: "1.7rem",
+            maxHeight: "60vh",
+            overflowY: "scroll",
           }}
         >
           {checklistData.map(({ name, id }) => (
-            <div
-              key={id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-                justifyContent: "space-between",
-              }}
-            >
-              <div style={{ display: "flex", gap: "0.5rem" }}>
-                <CheckBoxOutlinedIcon />
-                <p style={{ fontSize: "1.2rem" }}>{name}</p>
-              </div>
-              <Button
-                size="small"
-                variant="outlined"
-                startIcon={<DeleteIcon />}
-                sx={{
-                  color: "red",
-                  border: "1px solid red",
-                }}
-                onClick={() => {
-                  deleteCheckList(id);
+            <div key={id}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
                 }}
               >
-                Delete
-              </Button>
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <CheckBoxOutlinedIcon />
+                  <p style={{ fontSize: "1.25rem" }}>{name}</p>
+                </div>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  startIcon={<DeleteIcon />}
+                  sx={{
+                    color: "red",
+                    border: "1px solid red",
+                  }}
+                  onClick={() => {
+                    deleteCheckList(id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </div>
+              <CheckItems id={id} />
             </div>
           ))}
         </div>
