@@ -5,7 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CheckItems from "./checkItems";
+import CheckItems from "./Items";
 
 const yourKey = "e329af9483b37135d074e667f5f48020";
 const yourToken =
