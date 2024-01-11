@@ -194,7 +194,7 @@ const CheckList = ({ cardId, name, open, handleClose }) => {
                   Delete
                 </Button>
               </div>
-              <CheckItems id={id} />
+              <CheckItems cardId={cardId} id={id} />
             </div>
           ))}
         </div>

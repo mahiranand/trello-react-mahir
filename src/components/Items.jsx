@@ -3,6 +3,7 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
+  LinearProgress,
   TextField,
 } from "@mui/material";
 import axios from "axios";
@@ -15,10 +16,11 @@ const yourToken =
   "ATTA7b429b51abd4c5a77e17cc2148635edce084bc45b889d6a7c21bbadaea2709fc28232EFF";
 
 // eslint-disable-next-line react/prop-types
-const CheckItems = ({ id }) => {
+const CheckItems = ({ id, cardId }) => {
   const [checkItemsData, setCheckitemsData] = useState([]);
   const [showInputBox, setShowInputBox] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [taskDone, setTaskDone] = useState(0);
 
   useEffect(() => {
     axios
@@ -27,6 +29,11 @@ const CheckItems = ({ id }) => {
       )
       .then((res) => {
         setCheckitemsData(res.data);
+        for (let i in res.data) {
+          if (res.data[i].state == "complete") {
+            setTaskDone((prev) => prev + 1);
+          }
+        }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,18 +48,64 @@ const CheckItems = ({ id }) => {
       });
   };
 
-  const deleteCheckItem = (itemId) => {
+  const deleteCheckItem = (itemId, state) => {
     axios
       .delete(
         `https://api.trello.com/1/checklists/${id}/checkItems/${itemId}?key=${yourKey}&token=${yourToken}`
       )
       .then(() => {
         setCheckitemsData(checkItemsData.filter(({ id }) => id !== itemId));
+        if (state == "complete") {
+          setTaskDone((prev) => prev - 1);
+        }
+      });
+  };
+  const updataCheckItems = (itemId, state) => {
+    const newState = state == "complete" ? "incomplete" : "complete";
+    axios
+      .put(
+        `https://api.trello.com/1/cards/${cardId}/checkItem/${itemId}?state=${newState}&key=${yourKey}&token=${yourToken}`
+      )
+      .then((res) => {
+        if (state == "complete") {
+          setTaskDone((prev) => prev - 1);
+        } else {
+          setTaskDone((prev) => prev + 1);
+        }
+        setCheckitemsData(
+          checkItemsData.map((list) => {
+            if (list.id == res.data.id) {
+              return res.data;
+            }
+            return list;
+          })
+        );
       });
   };
 
   return (
     <div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          margin: "0.5rem 0",
+          marginLeft: "0.2rem",
+          gap: "1rem",
+        }}
+      >
+        <span>
+          {taskDone ? ((taskDone / checkItemsData.length) * 100).toFixed(2) : 0}
+          %
+        </span>
+        <LinearProgress
+          sx={{ width: "70%" }}
+          variant="determinate"
+          value={
+            taskDone ? ((taskDone / checkItemsData.length) * 100).toFixed(2) : 0
+          }
+        />
+      </div>
       <FormGroup sx={{ marginTop: "0.5rem" }}>
         {checkItemsData.map(({ name, id, state }) => {
           return (
@@ -62,7 +115,7 @@ const CheckItems = ({ id }) => {
                 display: "flex",
                 alignItems: "center",
                 width: "30%",
-                minWidth: '12rem',
+                minWidth: "12rem",
                 justifyContent: "space-between",
               }}
             >
@@ -70,6 +123,9 @@ const CheckItems = ({ id }) => {
                 sx={{ margin: "0px", padding: "0px", height: "1.5rem" }}
                 control={
                   <Checkbox
+                    onChange={() => {
+                      updataCheckItems(id, state);
+                    }}
                     checked={state == "complete" ? true : false}
                     size="small"
                   />
@@ -79,7 +135,7 @@ const CheckItems = ({ id }) => {
               <Button
                 sx={{ color: "black" }}
                 onClick={() => {
-                  deleteCheckItem(id);
+                  deleteCheckItem(id, state);
                 }}
               >
                 <DeleteIcon sx={{ fontSize: "1.2rem" }} />
