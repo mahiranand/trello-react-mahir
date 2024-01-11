@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CheckList from "./CheckList";
 
 const yourKey = "e329af9483b37135d074e667f5f48020";
 const yourToken =
@@ -13,6 +14,14 @@ const Cards = ({ id }) => {
   const [cardsData, setCardData] = useState([]);
   const [showButton, setShowButton] = useState(true);
   const [inputValue, setInputValue] = useState("");
+  const [openCardId, setOpenCardId] = useState(null);
+  const handleOpen = (cardId) => {
+    setOpenCardId(cardId);
+  };
+
+  const handleClose = () => {
+    setOpenCardId(null);
+  };
 
   useEffect(() => {
     axios
@@ -66,23 +75,33 @@ const Cards = ({ id }) => {
       >
         {cardsData.map(({ name, id }) => {
           return (
-            <Chip
-              label={name}
-              key={id}
-              sx={{
-                width: "100%",
-                height: "2.5rem",
-                margin: "0.4rem 0",
-                cursor: "pointer",
-                fontSize: "1.1rem",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-              onDelete={() => {
-                handleDelete(id);
-              }}
-              deleteIcon={<DeleteIcon />}
-            />
+            <div key={id}>
+              <Chip
+                label={name}
+                sx={{
+                  width: "100%",
+                  height: "2.5rem",
+                  margin: "0.4rem 0",
+                  cursor: "pointer",
+                  fontSize: "1.1rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+                onDelete={() => {
+                  handleDelete(id);
+                }}
+                onClick={() => {
+                  handleOpen(id);
+                }}
+                deleteIcon={<DeleteIcon />}
+              />
+              <CheckList
+                name={name}
+                open={openCardId === id}
+                handleClose={handleClose}
+                cardId={id}
+              />
+            </div>
           );
         })}
       </Box>
