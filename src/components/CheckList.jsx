@@ -155,14 +155,19 @@ const CheckList = ({ cardId, name, open, handleClose }) => {
             </div>
           </Popover>
         </div>
-        <div
-          style={{
+        <Box
+          sx={{
             marginTop: "1.5rem",
             display: "flex",
             flexDirection: "column",
             gap: "1.7rem",
             maxHeight: "60vh",
             overflowY: "scroll",
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
           }}
         >
           {checklistData.map(({ name, id }) => (
@@ -197,7 +202,7 @@ const CheckList = ({ cardId, name, open, handleClose }) => {
               <CheckItems cardId={cardId} id={id} />
             </div>
           ))}
-        </div>
+        </Box>
       </Box>
     </Modal>
   );
