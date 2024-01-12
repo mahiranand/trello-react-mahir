@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import Cards from "./Cards";
 import ArchiveIcon from "@mui/icons-material/Archive";
-
+import { get } from "../api/apiFunction";
 const yourKey = "e329af9483b37135d074e667f5f48020";
 const yourToken =
   "ATTA7b429b51abd4c5a77e17cc2148635edce084bc45b889d6a7c21bbadaea2709fc28232EFF";
@@ -24,13 +24,7 @@ const Lists = () => {
   const [listData, setListData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.trello.com/1/boards/${id}/lists?key=${yourKey}&token=${yourToken}`
-      )
-      .then((res) => {
-        setListData(res.data);
-      });
+    get("boards", "lists", setListData, id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

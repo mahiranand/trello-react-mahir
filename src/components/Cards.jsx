@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckList from "./CheckList";
+import { get } from "../api/apiFunction";
 
 const yourKey = "e329af9483b37135d074e667f5f48020";
 const yourToken =
@@ -24,13 +25,7 @@ const Cards = ({ id }) => {
   };
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.trello.com/1/lists/${id}/cards?key=${yourKey}&token=${yourToken}`
-      )
-      .then((res) => {
-        setCardData(res.data);
-      });
+    get("lists", "cards", setCardData, id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

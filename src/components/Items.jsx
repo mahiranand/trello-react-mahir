@@ -66,20 +66,21 @@ const CheckItems = ({ id, cardId }) => {
       .put(
         `https://api.trello.com/1/cards/${cardId}/checkItem/${itemId}?state=${newState}&key=${yourKey}&token=${yourToken}`
       )
-      .then((res) => {
-        if (state == "complete") {
-          setTaskDone((prev) => prev - 1);
-        } else {
-          setTaskDone((prev) => prev + 1);
-        }
-        setCheckitemsData(
-          checkItemsData.map((list) => {
-            if (list.id == res.data.id) {
-              return res.data;
+      .then(() => {
+        setCheckitemsData((prevData) => {
+          let count = 0;
+          const newData = prevData.map((data) => {
+            if (data.id == itemId) {
+              data.state = newState;
             }
-            return list;
-          })
-        );
+            if (data.state == "complete") {
+              count = count + 1;
+            }
+            return data;
+          });
+          setTaskDone(count);
+          return newData;
+        });
       });
   };
 

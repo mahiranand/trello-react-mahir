@@ -6,6 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckItems from "./Items";
+import { get } from "../api/apiFunction";
 
 const yourKey = "e329af9483b37135d074e667f5f48020";
 const yourToken =
@@ -30,13 +31,7 @@ const CheckList = ({ cardId, name, open, handleClose }) => {
   const [checkListName, setCheckListName] = useState("");
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.trello.com/1/cards/${cardId}/checklists?key=${yourKey}&token=${yourToken}`
-      )
-      .then((res) => {
-        setChecklistData(res.data);
-      });
+    get("cards", "checklists", setChecklistData, cardId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
